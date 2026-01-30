@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-
 using LibrarySystem.Core.Models;
 
 namespace LibrarySystem.Core.Services
 {
+    // Facade-klass som använder komposition för att samordna delsystemen
     public class Library
     {
         private readonly BookCatalog _bookCatalog;
@@ -57,7 +54,7 @@ namespace LibrarySystem.Core.Services
                 throw new ArgumentException("No active loan found for this book");
 
             loan.ReturnBook();
-            loan.Member.RemoveLoan(loan);
+            // Lånet finns kvar i medlemmens historik (tas inte bort)
         }
 
         public int GetTotalBooks() => _bookCatalog.GetTotalBooks();

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 using LibrarySystem.Core.Models;
 
 namespace LibrarySystem.Core.Services
@@ -12,7 +9,7 @@ namespace LibrarySystem.Core.Services
 
         public Loan CreateLoan(Book book, Member member)
         {
-            var loan = new Loan(book, member, DateTime.Now, DateTime.Now.AddDays(14));
+            var loan = new Loan(book, member, DateTime.Now, DateTime.Now.AddDays(Loan.DefaultLoanPeriodDays));
             _loans.Add(loan);
             return loan;
         }

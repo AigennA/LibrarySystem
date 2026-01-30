@@ -1,24 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LibrarySystem.Core.Models
 {
     public class Book : ISearchable
     {
         public string ISBN { get; }
-        public string Title { get; set; }
-        public string Author { get; set; }
-        public int PublishedYear { get; set; }
+        public string Title { get; }
+        public string Author { get; }
+        public int PublishedYear { get; }
         public bool IsAvailable { get; set; }
-
-        public Book()
-        {
-            ISBN = string.Empty;
-            Title = string.Empty;
-            Author = string.Empty;
-            IsAvailable = true;
-        }
 
         public Book(string isbn, string title, string author, int publishedYear)
         {

@@ -1,26 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace LibrarySystem.Core.Models
 {
     public class Member : ISearchable
     {
-        public string MemberId { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public DateTime MemberSince { get; set; }
+        public string MemberId { get; }
+        public string Name { get; }
+        public string Email { get; }
+        public DateTime MemberSince { get; }
 
-        private List<Loan> _loans = new();
+        // Intern lista - exponeras som readonly för inkapsling
+        private readonly List<Loan> _loans = new();
         public IReadOnlyList<Loan> Loans => _loans.AsReadOnly();
-
-        public Member()
-        {
-            MemberId = string.Empty;
-            Name = string.Empty;
-            Email = string.Empty;
-            MemberSince = DateTime.Now;
-        }
 
         public Member(string memberId, string name, string email)
         {

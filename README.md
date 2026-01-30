@@ -31,23 +31,7 @@ Ett `Library`-objekt ansvarar för att samordna:
 - `MemberRegistry` – hantering av medlemmar
 - `LoanManager` – hantering av utlåning
 
-Sökfunktionalitet implementeras via interfacet `ISearchable`, vilket möjliggör
-polymorf sökning.
-
-Projektstrukturen justerades under utvecklingen för att uppnå en tydligare och
-mer konsekvent solution-struktur.
-
----
-
-## SOLID-principer
-
-Projektet följer SOLID-principerna:
-
-- **S**ingle Responsibility – varje klass har ett tydligt ansvar
-- **O**pen/Closed – lätt att utöka via `ISearchable`
-- **L**iskov Substitution – `ISearchable` kan användas polymorfiskt
-- **I**nterface Segregation – interfacet är litet och fokuserat
-- **D**ependency Inversion – `Library` arbetar mot abstraktioner
+Sökfunktionalitet implementeras via interfacet `ISearchable` för polymorf sökning.
 
 ---
 
@@ -73,28 +57,24 @@ Projektet följer SOLID-principerna:
 ---
 ## Hämta projektet
 
-Projektet kan hämtas från GitHub på två sätt. Antingen kan projektet laddas ner som ZIP-fil genom att gå till GitHub-repot, klicka på Code → Download ZIP, packa upp filen och därefter öppna `LibrarySystem.sln` i Visual Studio.
+```bash
+git clone https://github.com/AigennA/LibrarySystem.git
+```
 
-Det går även att klona projektet via Git genom att använda följande kommando:  
-git clone https://github.com/AigennA/LibrarySystem.git  
-
-Efter kloning öppnas `LibrarySystem.sln` i Visual Studio, **LibrarySystem.Console** sätts som Startup Project och applikationen kan därefter köras.
+Öppna sedan `LibrarySystem.sln` i Visual Studio.
 
 
 ## Tester
 
-Projektet innehåller **44 enhetstester**, vilket överstiger minimikravet (10 tester).
+Projektet innehåller **44 enhetstester** (minimikrav: 10).
 
-Tester verifierar:
-- Bok- och lånelogik
-- Sökning via interface
-- Statistikberäkningar
-- Felhantering och edge cases
-
-Kör tester i Visual Studio via:  
-**Test → Kör alla tester**
-
-Eller via terminal:
+Kör tester via terminal:
 ```bash
 dotnet test
+```
+
+Testresultat:
+```
+Passed!  - Failed: 0, Passed: 44, Skipped: 0, Total: 44
+```
 

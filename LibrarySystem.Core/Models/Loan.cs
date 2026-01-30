@@ -1,29 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LibrarySystem.Core.Models
 {
     public class Loan
     {
-        public Book Book { get; set; }
-        public Member Member { get; set; }
-        public DateTime LoanDate { get; set; }
-        public DateTime DueDate { get; set; }
-        public DateTime? ReturnDate { get; set; }
+        public const int DefaultLoanPeriodDays = 14;
 
+        public Book Book { get; }
+        public Member Member { get; }
+        public DateTime LoanDate { get; }
+        public DateTime DueDate { get; }
+        public DateTime? ReturnDate { get; private set; }
+
+        // Försenat = ej returnerad OCH passerat förfallodatum
         public bool IsOverdue => !IsReturned && DateTime.Now > DueDate;
         public bool IsReturned => ReturnDate.HasValue;
 
+        // Förseningsavgift: 10 kr per dag
         private const decimal FeePerDay = 10m;
-
-        public Loan()
-        {
-            Book = null!;
-            Member = null!;
-            LoanDate = DateTime.Now;
-            DueDate = DateTime.Now.AddDays(14);
-        }
 
         public Loan(Book book, Member member, DateTime loanDate, DateTime dueDate)
         {
