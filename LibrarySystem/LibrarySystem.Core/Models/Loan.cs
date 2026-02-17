@@ -1,16 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace LibrarySystem.Core.Models
 {
     public class Loan
     {
-        public int Id { get; set; }  // Primary key för EF
-        public int BookId { get; set; }  // Foreign key
-        public string MemberId { get; set; } = string.Empty;  // Foreign key
-
-        public virtual Book Book { get; set; } = null!;
-        public virtual Member Member { get; set; } = null!;
-
+        public Book Book { get; set; }
+        public Member Member { get; set; }
         public DateTime LoanDate { get; set; }
         public DateTime DueDate { get; set; }
         public DateTime? ReturnDate { get; set; }
@@ -20,9 +17,10 @@ namespace LibrarySystem.Core.Models
 
         private const decimal FeePerDay = 10m;
 
-        // Parameterless constructor för EF
         public Loan()
         {
+            Book = null!;
+            Member = null!;
             LoanDate = DateTime.Now;
             DueDate = DateTime.Now.AddDays(14);
         }
@@ -37,9 +35,7 @@ namespace LibrarySystem.Core.Models
                 throw new ArgumentException("Due date must be after loan date");
 
             Book = book;
-            BookId = book.Id;
             Member = member;
-            MemberId = member.MemberId;
             LoanDate = loanDate;
             DueDate = dueDate;
         }

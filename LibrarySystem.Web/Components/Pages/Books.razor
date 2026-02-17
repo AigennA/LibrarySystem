@@ -1,0 +1,192 @@
+@page "/books"
+@rendermode InteractiveServer
+@inject IBookRepository BookRepo
+
+<PageTitle>Boklista</PageTitle>
+
+<h1>Boklista</h1>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <input type="text" class="form-control" placeholder="Sok bok..." @bind="searchTerm" @bind:event="oninput" />
+    </div>
+    <div class="col-md-6 text-end">
+        <button class="btn btn-primary" @onclick="ToggleAddForm">
+            @(showAddForm ? "Stang" : "Lagg till bok")
+        </button>
+    </div>
+</div>
+
+@if (showAddForm)
+{
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Lagg till ny bok</h5>
+            <EditForm Model="newBook" OnValidSubmit="AddBook" FormName="addBook">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <div class="row">
+                    <div class="col-md-3 mb-2">
+                        <label class="form-label">ISBN</label>
+                        <InputText class="form-control" @bind-Value="newBook.ISBN" />
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label class="form-label">Titel</label>
+                        <InputText class="form-control" @bind-Value="newBook.Title" />
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label class="form-label">Forfattare</label>
+                        <InputText class="form-control" @bind-Value="newBook.Author" />
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <label class="form-label">Utgivningsar</label>
+                        <InputNumber class="form-control" @bind-Value="newBook.PublishedYear" />
+                    </div>
+                    <div class="col-md-1 mb-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-success">Spara</button>
+                    </div>
+                </div>
+            </EditForm>
+            @if (!string.IsNullOrEmpty(addMessage))
+            {
+                <div class="alert alert-info mt-2">@addMessage</div>
+            }
+        </div>
+    </div>
+}
+
+@if (books == null)
+{
+    <p><em>Laddar...</em></p>
+}
+else
+{
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th style="cursor:pointer" @onclick='() => SortBy("title")'>
+                    Titel @SortIndicator("title")
+                </th>
+                <th style="cursor:pointer" @onclick='() => SortBy("author")'>
+                    Forfattare @SortIndicator("author")
+                </th>
+                <th style="cursor:pointer" @onclick='() => SortBy("year")'>
+                    Ar @SortIndicator("year")
+                </th>
+                <th>ISBN</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in FilteredBooks)
+            {
+                <tr>
+                    <td>@book.Title</td>
+                    <td>@book.Author</td>
+                    <td>@book.PublishedYear</td>
+                    <td>@book.ISBN</td>
+                    <td>
+                        @if (book.IsAvailable)
+                        {
+                            <span class="badge bg-success">Tillganglig</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Utlanad</span>
+                        }
+                    </td>
+                    <td>
+                        <a href="books/@book.Id" class="btn btn-sm btn-outline-primary">Detaljer</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Book>? books;
+    private BookFormModel newBook = new();
+    private bool showAddForm;
+    private string searchTerm = string.Empty;
+    private string sortColumn = "title";
+    private bool sortAscending = true;
+    private string addMessage = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadBooks();
+    }
+
+    private async Task LoadBooks()
+    {
+        books = (await BookRepo.GetAllAsync()).ToList();
+    }
+
+    private IEnumerable<Book> FilteredBooks
+    {
+        get
+        {
+            if (books == null) return Enumerable.Empty<Book>();
+
+            var filtered = string.IsNullOrWhiteSpace(searchTerm)
+                ? books
+                : books.Where(b => b.Matches(searchTerm));
+
+            return sortColumn switch
+            {
+                "title" => sortAscending ? filtered.OrderBy(b => b.Title) : filtered.OrderByDescending(b => b.Title),
+                "author" => sortAscending ? filtered.OrderBy(b => b.Author) : filtered.OrderByDescending(b => b.Author),
+                "year" => sortAscending ? filtered.OrderBy(b => b.PublishedYear) : filtered.OrderByDescending(b => b.PublishedYear),
+                _ => filtered
+            };
+        }
+    }
+
+    private void SortBy(string column)
+    {
+        if (sortColumn == column)
+            sortAscending = !sortAscending;
+        else
+        {
+            sortColumn = column;
+            sortAscending = true;
+        }
+    }
+
+    private string SortIndicator(string column)
+    {
+        if (sortColumn != column) return "";
+        return sortAscending ? "▲" : "▼";
+    }
+
+    private void ToggleAddForm()
+    {
+        showAddForm = !showAddForm;
+        addMessage = string.Empty;
+    }
+
+    private async Task AddBook()
+    {
+        if (string.IsNullOrWhiteSpace(newBook.ISBN) || string.IsNullOrWhiteSpace(newBook.Title) || string.IsNullOrWhiteSpace(newBook.Author))
+        {
+            addMessage = "Alla falt maste fyllas i.";
+            return;
+        }
+
+        var book = new Book(newBook.ISBN, newBook.Title, newBook.Author, newBook.PublishedYear);
+        await BookRepo.AddAsync(book);
+        newBook = new BookFormModel();
+        addMessage = "Boken har lagts till!";
+        await LoadBooks();
+    }
+
+    private class BookFormModel
+    {
+        public string ISBN { get; set; } = string.Empty;
+        public string Title { get; set; } = string.Empty;
+        public string Author { get; set; } = string.Empty;
+        public int PublishedYear { get; set; } = DateTime.Now.Year;
+    }
+}

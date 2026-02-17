@@ -1,0 +1,80 @@
+@page "/"
+@rendermode InteractiveServer
+@inject IBookRepository BookRepo
+@inject IMemberRepository MemberRepo
+@inject ILoanRepository LoanRepo
+
+<PageTitle>Hem - Bibliotekssystem</PageTitle>
+
+<h1>Bibliotekssystem</h1>
+<p class="lead">Hantera bocker, medlemmar och utlaningar.</p>
+
+@if (loaded)
+{
+    <div class="row mt-4">
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h5 class="card-title">Bocker</h5>
+                    <p class="card-text display-6">@totalBooks</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h5 class="card-title">Medlemmar</h5>
+                    <p class="card-text display-6">@totalMembers</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-warning">
+                <div class="card-body">
+                    <h5 class="card-title">Aktiva lan</h5>
+                    <p class="card-text display-6">@activeLoans</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-danger">
+                <div class="card-body">
+                    <h5 class="card-title">Forsenade</h5>
+                    <p class="card-text display-6">@overdueLoans</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="books" class="btn btn-primary me-2">Boklista</a>
+        <a href="members" class="btn btn-success me-2">Medlemmar</a>
+        <a href="loans" class="btn btn-warning">Utlaningar</a>
+    </div>
+}
+else
+{
+    <p><em>Laddar...</em></p>
+}
+
+@code {
+    private int totalBooks;
+    private int totalMembers;
+    private int activeLoans;
+    private int overdueLoans;
+    private bool loaded;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var books = await BookRepo.GetAllAsync();
+        var members = await MemberRepo.GetAllAsync();
+        var active = await LoanRepo.GetActiveLoansAsync();
+        var overdue = await LoanRepo.GetOverdueLoansAsync();
+
+        totalBooks = books.Count();
+        totalMembers = members.Count();
+        activeLoans = active.Count();
+        overdueLoans = overdue.Count();
+        loaded = true;
+    }
+}

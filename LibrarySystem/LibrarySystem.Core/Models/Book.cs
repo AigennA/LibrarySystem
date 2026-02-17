@@ -1,17 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace LibrarySystem.Core.Models
 {
     public class Book : ISearchable
     {
-        public int Id { get; set; }  // Auto-increment PK för EF
-        public string ISBN { get; set; } = string.Empty;
-        public string Title { get; set; } = string.Empty;
-        public string Author { get; set; } = string.Empty;
+        public string ISBN { get; }
+        public string Title { get; set; }
+        public string Author { get; set; }
         public int PublishedYear { get; set; }
         public bool IsAvailable { get; set; }
 
-        // Parameterless constructor för EF
         public Book()
         {
             ISBN = string.Empty;
@@ -52,8 +52,5 @@ namespace LibrarySystem.Core.Models
                    Author.ToLower().Contains(searchTerm) ||
                    ISBN.ToLower().Contains(searchTerm);
         }
-
-        // Navigation property för Entity Framework
-        public virtual ICollection<Loan> Loans { get; set; } = new List<Loan>();
     }
 }

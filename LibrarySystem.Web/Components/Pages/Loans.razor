@@ -1,0 +1,151 @@
+@page "/loans"
+@rendermode InteractiveServer
+@inject IBookRepository BookRepo
+@inject IMemberRepository MemberRepo
+@inject ILoanRepository LoanRepo
+
+<PageTitle>Utlaningar</PageTitle>
+
+<h1>Utlaningar</h1>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">Nytt lan</h5>
+        <div class="row">
+            <div class="col-md-4 mb-2">
+                <label class="form-label">Bok</label>
+                <select class="form-select" @bind="selectedBookId">
+                    <option value="0">-- Valj bok --</option>
+                    @if (availableBooks != null)
+                    {
+                        @foreach (var book in availableBooks)
+                        {
+                            <option value="@book.Id">@book.Title (@book.ISBN)</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-4 mb-2">
+                <label class="form-label">Medlem</label>
+                <select class="form-select" @bind="selectedMemberId">
+                    <option value="">-- Valj medlem --</option>
+                    @if (members != null)
+                    {
+                        @foreach (var m in members)
+                        {
+                            <option value="@m.MemberId">@m.Name (@m.MemberId)</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-4 mb-2 d-flex align-items-end">
+                <button class="btn btn-primary" @onclick="CreateLoan" disabled="@(selectedBookId == 0 || string.IsNullOrEmpty(selectedMemberId))">Lana ut</button>
+            </div>
+        </div>
+        @if (!string.IsNullOrEmpty(loanMessage))
+        {
+            <div class="alert alert-info mt-2">@loanMessage</div>
+        }
+    </div>
+</div>
+
+<h3>Aktiva lan</h3>
+@if (activeLoans == null)
+{
+    <p><em>Laddar...</em></p>
+}
+else if (!activeLoans.Any())
+{
+    <p>Inga aktiva lan.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Bok</th>
+                <th>Medlem</th>
+                <th>Lanadatum</th>
+                <th>Forfallodatum</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var loan in activeLoans)
+            {
+                <tr class="@(loan.IsOverdue ? "table-danger" : "")">
+                    <td>@loan.Book.Title</td>
+                    <td>@loan.Member.Name</td>
+                    <td>@loan.LoanDate.ToString("yyyy-MM-dd")</td>
+                    <td>@loan.DueDate.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        @if (loan.IsOverdue)
+                        {
+                            <span class="badge bg-danger">Forsenad (@loan.GetDaysOverdue() dagar)</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success">Aktiv</span>
+                        }
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-warning" @onclick="() => ReturnBook(loan)">Returnera</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Book>? availableBooks;
+    private List<Member>? members;
+    private List<Loan>? activeLoans;
+    private int selectedBookId;
+    private string selectedMemberId = string.Empty;
+    private string loanMessage = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        var allBooks = await BookRepo.GetAllAsync();
+        availableBooks = allBooks.Where(b => b.IsAvailable).ToList();
+        members = (await MemberRepo.GetAllAsync()).ToList();
+        activeLoans = (await LoanRepo.GetActiveLoansAsync()).ToList();
+    }
+
+    private async Task CreateLoan()
+    {
+        if (selectedBookId == 0 || string.IsNullOrEmpty(selectedMemberId)) return;
+
+        var book = await BookRepo.GetByIdAsync(selectedBookId);
+        var member = await MemberRepo.GetByIdAsync(selectedMemberId);
+
+        if (book == null || member == null || !book.IsAvailable) return;
+
+        var loan = new Loan(book, member, DateTime.Now, DateTime.Now.AddDays(14));
+        book.IsAvailable = false;
+        await LoanRepo.AddAsync(loan);
+        await BookRepo.UpdateAsync(book);
+
+        loanMessage = $"'{book.Title}' har lanats ut till {member.Name}!";
+        selectedBookId = 0;
+        selectedMemberId = string.Empty;
+        await LoadData();
+    }
+
+    private async Task ReturnBook(Loan loan)
+    {
+        loan.ReturnBook();
+        await LoanRepo.UpdateAsync(loan);
+        await BookRepo.UpdateAsync(loan.Book);
+
+        loanMessage = $"'{loan.Book.Title}' har returnerats!";
+        await LoadData();
+    }
+}

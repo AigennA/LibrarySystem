@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 
 namespace LibrarySystem.Core.Models
 {
     public class Member : ISearchable
     {
-        public string MemberId { get; set; } = string.Empty;
-        public string Name { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
+        public string MemberId { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
         public DateTime MemberSince { get; set; }
 
-        // Navigation property - används av både EF och affärslogik
-        public virtual ICollection<Loan> Loans { get; set; } = new List<Loan>();
+        private List<Loan> _loans = new();
+        public IReadOnlyList<Loan> Loans => _loans.AsReadOnly();
 
-        // Parameterless constructor för EF
         public Member()
         {
             MemberId = string.Empty;
@@ -40,17 +39,17 @@ namespace LibrarySystem.Core.Models
 
         public void AddLoan(Loan loan)
         {
-            Loans.Add(loan);
+            _loans.Add(loan);
         }
 
         public void RemoveLoan(Loan loan)
         {
-            Loans.Remove(loan);
+            _loans.Remove(loan);
         }
 
         public IEnumerable<Loan> GetActiveLoans()
         {
-            return Loans.Where(l => !l.IsReturned);
+            return _loans.Where(l => !l.IsReturned);
         }
 
         public string GetMemberInfo()
