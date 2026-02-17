@@ -44,7 +44,9 @@ using (var scope = app.Services.CreateScope())
         context.Members.AddRange(
             new LibrarySystem.Core.Models.Member("M001", "Anna Andersson", "anna@email.com"),
             new LibrarySystem.Core.Models.Member("M002", "Bob Bengtsson", "bob@email.com"),
-            new LibrarySystem.Core.Models.Member("M003", "Cecilia Carlsson", "cecilia@email.com")
+            new LibrarySystem.Core.Models.Member("M003", "Cecilia Carlsson", "cecilia@email.com"),
+            new LibrarySystem.Core.Models.Member("M004", "David Danielsson", "david@email.com"),
+            new LibrarySystem.Core.Models.Member("M005", "Eva Eriksson", "eva@email.com")
         );
 
         context.SaveChanges();
