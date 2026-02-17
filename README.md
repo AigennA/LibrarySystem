@@ -107,7 +107,7 @@ Projektet innehåller **60 enhetstester** (minimikrav: 10).
 ```bash
 dotnet test
 ```
-
+Eller via Test Explorer i Visual Studio.
 Testresultat:
 ```
 Passed!  - Failed: 0, Passed: 60, Skipped: 0, Total: 60
