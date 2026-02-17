@@ -33,7 +33,12 @@ using (var scope = app.Services.CreateScope())
             new LibrarySystem.Core.Models.Book("978-91-0-012345-7", "Hobbiten", "J.R.R. Tolkien", 1937),
             new LibrarySystem.Core.Models.Book("978-91-0-012345-8", "Harry Potter och de vises sten", "J.K. Rowling", 1997),
             new LibrarySystem.Core.Models.Book("978-91-0-012345-9", "1984", "George Orwell", 1949),
-            new LibrarySystem.Core.Models.Book("978-91-0-012346-0", "Brott och straff", "Fjodor Dostojevskij", 1866)
+            new LibrarySystem.Core.Models.Book("978-91-0-012346-0", "Brott och straff", "Fjodor Dostojevskij", 1866),
+            new LibrarySystem.Core.Models.Book("978-91-29-06634-5", "Pippi Långstrump", "Astrid Lindgren", 1945),
+            new LibrarySystem.Core.Models.Book("978-91-7001-765-0", "Män som hatar kvinnor", "Stieg Larsson", 2005),
+            new LibrarySystem.Core.Models.Book("978-91-37-14199-5", "En man som heter Ove", "Fredrik Backman", 2012),
+            new LibrarySystem.Core.Models.Book("978-91-0-056734-2", "Kallocain", "Karin Boye", 1940),
+            new LibrarySystem.Core.Models.Book("978-91-0-072221-6", "Doktor Glas", "Hjalmar Söderberg", 1905)
         );
 
         context.Members.AddRange(
