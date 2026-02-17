@@ -7,7 +7,7 @@
 <PageTitle>Hem - Bibliotekssystem</PageTitle>
 
 <h1>Bibliotekssystem</h1>
-<p class="lead">Hantera bocker, medlemmar och utlaningar.</p>
+<p class="lead">Hantera böcker, medlemmar och utlåningar.</p>
 
 @if (loaded)
 {
@@ -15,7 +15,7 @@
         <div class="col-md-3 mb-3">
             <div class="card text-white bg-primary">
                 <div class="card-body">
-                    <h5 class="card-title">Bocker</h5>
+                    <h5 class="card-title">Böcker</h5>
                     <p class="card-text display-6">@totalBooks</p>
                 </div>
             </div>
@@ -31,7 +31,7 @@
         <div class="col-md-3 mb-3">
             <div class="card text-white bg-warning">
                 <div class="card-body">
-                    <h5 class="card-title">Aktiva lan</h5>
+                    <h5 class="card-title">Aktiva lån</h5>
                     <p class="card-text display-6">@activeLoans</p>
                 </div>
             </div>
@@ -39,7 +39,7 @@
         <div class="col-md-3 mb-3">
             <div class="card text-white bg-danger">
                 <div class="card-body">
-                    <h5 class="card-title">Forsenade</h5>
+                    <h5 class="card-title">Försenade</h5>
                     <p class="card-text display-6">@overdueLoans</p>
                 </div>
             </div>
@@ -49,7 +49,7 @@
     <div class="mt-4">
         <a href="books" class="btn btn-primary me-2">Boklista</a>
         <a href="members" class="btn btn-success me-2">Medlemmar</a>
-        <a href="loans" class="btn btn-warning">Utlaningar</a>
+        <a href="loans" class="btn btn-warning">Utlåningar</a>
     </div>
 }
 else

@@ -4,18 +4,18 @@
 @inject IMemberRepository MemberRepo
 @inject ILoanRepository LoanRepo
 
-<PageTitle>Utlaningar</PageTitle>
+<PageTitle>Utlåningar</PageTitle>
 
-<h1>Utlaningar</h1>
+<h1>Utlåningar</h1>
 
 <div class="card mb-4">
     <div class="card-body">
-        <h5 class="card-title">Nytt lan</h5>
+        <h5 class="card-title">Nytt lån</h5>
         <div class="row">
             <div class="col-md-4 mb-2">
                 <label class="form-label">Bok</label>
                 <select class="form-select" @bind="selectedBookId">
-                    <option value="0">-- Valj bok --</option>
+                    <option value="0">-- Välj bok --</option>
                     @if (availableBooks != null)
                     {
                         @foreach (var book in availableBooks)
@@ -28,7 +28,7 @@
             <div class="col-md-4 mb-2">
                 <label class="form-label">Medlem</label>
                 <select class="form-select" @bind="selectedMemberId">
-                    <option value="">-- Valj medlem --</option>
+                    <option value="">-- Välj medlem --</option>
                     @if (members != null)
                     {
                         @foreach (var m in members)
@@ -39,7 +39,7 @@
                 </select>
             </div>
             <div class="col-md-4 mb-2 d-flex align-items-end">
-                <button class="btn btn-primary" @onclick="CreateLoan" disabled="@(selectedBookId == 0 || string.IsNullOrEmpty(selectedMemberId))">Lana ut</button>
+                <button class="btn btn-primary" @onclick="CreateLoan" disabled="@(selectedBookId == 0 || string.IsNullOrEmpty(selectedMemberId))">Låna ut</button>
             </div>
         </div>
         @if (!string.IsNullOrEmpty(loanMessage))
@@ -49,14 +49,14 @@
     </div>
 </div>
 
-<h3>Aktiva lan</h3>
+<h3>Aktiva lån</h3>
 @if (activeLoans == null)
 {
     <p><em>Laddar...</em></p>
 }
 else if (!activeLoans.Any())
 {
-    <p>Inga aktiva lan.</p>
+    <p>Inga aktiva lån.</p>
 }
 else
 {
@@ -65,8 +65,8 @@ else
             <tr>
                 <th>Bok</th>
                 <th>Medlem</th>
-                <th>Lanadatum</th>
-                <th>Forfallodatum</th>
+                <th>Lånedatum</th>
+                <th>Förfallodatum</th>
                 <th>Status</th>
                 <th></th>
             </tr>
@@ -82,7 +82,7 @@ else
                     <td>
                         @if (loan.IsOverdue)
                         {
-                            <span class="badge bg-danger">Forsenad (@loan.GetDaysOverdue() dagar)</span>
+                            <span class="badge bg-danger">Försenad (@loan.GetDaysOverdue() dagar)</span>
                         }
                         else
                         {
@@ -133,7 +133,7 @@ else
         await LoanRepo.AddAsync(loan);
         await BookRepo.UpdateAsync(book);
 
-        loanMessage = $"'{book.Title}' har lanats ut till {member.Name}!";
+        loanMessage = $"'{book.Title}' har lånats ut till {member.Name}!";
         selectedBookId = 0;
         selectedMemberId = string.Empty;
         await LoadData();

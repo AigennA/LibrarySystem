@@ -18,9 +18,9 @@ else
     <div class="card mb-4">
         <div class="card-body">
             <dl class="row mb-0">
-                <dt class="col-sm-3">Forfattare</dt>
+                <dt class="col-sm-3">Författare</dt>
                 <dd class="col-sm-9">@book.Author</dd>
-                <dt class="col-sm-3">Utgivningsar</dt>
+                <dt class="col-sm-3">Utgivningsår</dt>
                 <dd class="col-sm-9">@book.PublishedYear</dd>
                 <dt class="col-sm-3">ISBN</dt>
                 <dd class="col-sm-9">@book.ISBN</dd>
@@ -28,7 +28,7 @@ else
                 <dd class="col-sm-9">
                     @if (book.IsAvailable)
                     {
-                        <span class="badge bg-success">Tillganglig</span>
+                        <span class="badge bg-success">Tillgänglig</span>
                     }
                     else
                     {
@@ -43,11 +43,11 @@ else
     {
         <div class="card mb-4">
             <div class="card-body">
-                <h5>Lana ut</h5>
+                <h5>Låna ut</h5>
                 <div class="row">
                     <div class="col-md-6">
                         <select class="form-select" @bind="selectedMemberId">
-                            <option value="">-- Valj medlem --</option>
+                            <option value="">-- Välj medlem --</option>
                             @if (members != null)
                             {
                                 @foreach (var m in members)
@@ -58,7 +58,7 @@ else
                         </select>
                     </div>
                     <div class="col-md-3">
-                        <button class="btn btn-primary" @onclick="LoanBook" disabled="@string.IsNullOrEmpty(selectedMemberId)">Lana ut</button>
+                        <button class="btn btn-primary" @onclick="LoanBook" disabled="@string.IsNullOrEmpty(selectedMemberId)">Låna ut</button>
                     </div>
                 </div>
                 @if (!string.IsNullOrEmpty(message))
@@ -72,8 +72,8 @@ else
     {
         <div class="card mb-4">
             <div class="card-body">
-                <h5>Aktivt lan</h5>
-                <p>Lanad av: @activeLoan.Member.Name, Lanadatum: @activeLoan.LoanDate.ToString("yyyy-MM-dd"), Forfallodatum: @activeLoan.DueDate.ToString("yyyy-MM-dd")</p>
+                <h5>Aktivt lån</h5>
+                <p>Lånad av: @activeLoan.Member.Name, Lånedatum: @activeLoan.LoanDate.ToString("yyyy-MM-dd"), Förfallodatum: @activeLoan.DueDate.ToString("yyyy-MM-dd")</p>
                 <button class="btn btn-warning" @onclick="ReturnBook">Returnera</button>
                 @if (!string.IsNullOrEmpty(message))
                 {
@@ -83,15 +83,15 @@ else
         </div>
     }
 
-    <h3>Lanhistorik</h3>
+    <h3>Lånhistorik</h3>
     @if (loans != null && loans.Any())
     {
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Medlem</th>
-                    <th>Lanadatum</th>
-                    <th>Forfallodatum</th>
+                    <th>Lånedatum</th>
+                    <th>Förfallodatum</th>
                     <th>Returdatum</th>
                     <th>Status</th>
                 </tr>
@@ -111,7 +111,7 @@ else
                             }
                             else if (loan.IsOverdue)
                             {
-                                <span class="badge bg-danger">Forsenad</span>
+                                <span class="badge bg-danger">Försenad</span>
                             }
                             else
                             {
@@ -125,7 +125,7 @@ else
     }
     else
     {
-        <p>Inga lan finns for denna bok.</p>
+        <p>Inga lån finns för denna bok.</p>
     }
 
     <a href="books" class="btn btn-outline-secondary mt-3">Tillbaka till boklistan</a>
@@ -170,7 +170,7 @@ else
         await LoanRepo.AddAsync(loan);
         await BookRepo.UpdateAsync(book);
 
-        message = "Boken har lanats ut!";
+        message = "Boken har lånats ut!";
         selectedMemberId = string.Empty;
         await LoadData();
     }

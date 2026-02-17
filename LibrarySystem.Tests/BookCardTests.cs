@@ -30,7 +30,7 @@ namespace LibrarySystem.Tests
 
             var badge = cut.Find(".badge");
             Assert.Contains("bg-success", badge.ClassList);
-            Assert.Equal("Tillganglig", badge.TextContent);
+            Assert.Equal("Tillgänglig", badge.TextContent);
         }
 
         [Fact]

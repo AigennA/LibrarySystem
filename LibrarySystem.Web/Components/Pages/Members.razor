@@ -9,7 +9,7 @@
 
 <div class="mb-3 text-end">
     <button class="btn btn-success" @onclick="ToggleAddForm">
-        @(showAddForm ? "Stang" : "Lagg till medlem")
+        @(showAddForm ? "Stäng" : "Lägg till medlem")
     </button>
 </div>
 
@@ -17,7 +17,7 @@
 {
     <div class="card mb-3">
         <div class="card-body">
-            <h5 class="card-title">Lagg till ny medlem</h5>
+            <h5 class="card-title">Lägg till ny medlem</h5>
             <EditForm Model="newMember" OnValidSubmit="AddMember" FormName="addMember">
                 <DataAnnotationsValidator />
                 <ValidationSummary />
@@ -60,7 +60,7 @@ else
                 <th>Namn</th>
                 <th>E-post</th>
                 <th>Medlem sedan</th>
-                <th>Aktiva lan</th>
+                <th>Aktiva lån</th>
             </tr>
         </thead>
         <tbody>
@@ -121,7 +121,7 @@ else
     {
         if (string.IsNullOrWhiteSpace(newMember.MemberId) || string.IsNullOrWhiteSpace(newMember.Name) || string.IsNullOrWhiteSpace(newMember.Email))
         {
-            addMessage = "Alla falt maste fyllas i.";
+            addMessage = "Alla fält måste fyllas i.";
             return;
         }
 

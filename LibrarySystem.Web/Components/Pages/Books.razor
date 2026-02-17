@@ -8,11 +8,11 @@
 
 <div class="row mb-3">
     <div class="col-md-6">
-        <input type="text" class="form-control" placeholder="Sok bok..." @bind="searchTerm" @bind:event="oninput" />
+        <input type="text" class="form-control" placeholder="Sök bok..." @bind="searchTerm" @bind:event="oninput" />
     </div>
     <div class="col-md-6 text-end">
         <button class="btn btn-primary" @onclick="ToggleAddForm">
-            @(showAddForm ? "Stang" : "Lagg till bok")
+            @(showAddForm ? "Stäng" : "Lägg till bok")
         </button>
     </div>
 </div>
@@ -21,7 +21,7 @@
 {
     <div class="card mb-3">
         <div class="card-body">
-            <h5 class="card-title">Lagg till ny bok</h5>
+            <h5 class="card-title">Lägg till ny bok</h5>
             <EditForm Model="newBook" OnValidSubmit="AddBook" FormName="addBook">
                 <DataAnnotationsValidator />
                 <ValidationSummary />
@@ -35,11 +35,11 @@
                         <InputText class="form-control" @bind-Value="newBook.Title" />
                     </div>
                     <div class="col-md-3 mb-2">
-                        <label class="form-label">Forfattare</label>
+                        <label class="form-label">Författare</label>
                         <InputText class="form-control" @bind-Value="newBook.Author" />
                     </div>
                     <div class="col-md-2 mb-2">
-                        <label class="form-label">Utgivningsar</label>
+                        <label class="form-label">Utgivningsår</label>
                         <InputNumber class="form-control" @bind-Value="newBook.PublishedYear" />
                     </div>
                     <div class="col-md-1 mb-2 d-flex align-items-end">
@@ -68,10 +68,10 @@ else
                     Titel @SortIndicator("title")
                 </th>
                 <th style="cursor:pointer" @onclick='() => SortBy("author")'>
-                    Forfattare @SortIndicator("author")
+                    Författare @SortIndicator("author")
                 </th>
                 <th style="cursor:pointer" @onclick='() => SortBy("year")'>
-                    Ar @SortIndicator("year")
+                    År @SortIndicator("year")
                 </th>
                 <th>ISBN</th>
                 <th>Status</th>
@@ -89,7 +89,7 @@ else
                     <td>
                         @if (book.IsAvailable)
                         {
-                            <span class="badge bg-success">Tillganglig</span>
+                            <span class="badge bg-success">Tillgänglig</span>
                         }
                         else
                         {
@@ -171,7 +171,7 @@ else
     {
         if (string.IsNullOrWhiteSpace(newBook.ISBN) || string.IsNullOrWhiteSpace(newBook.Title) || string.IsNullOrWhiteSpace(newBook.Author))
         {
-            addMessage = "Alla falt maste fyllas i.";
+            addMessage = "Alla fält måste fyllas i.";
             return;
         }
 
