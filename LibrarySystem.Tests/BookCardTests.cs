@@ -46,7 +46,7 @@ namespace LibrarySystem.Tests
 
             var badge = cut.Find(".badge");
             Assert.Contains("bg-danger", badge.ClassList);
-            Assert.Equal("Utlanad", badge.TextContent);
+            Assert.Equal("Utlånad", badge.TextContent);
         }
     }
 }
