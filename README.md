@@ -112,3 +112,41 @@ Testresultat:
 ```
 Passed!  - Failed: 0, Passed: 60, Skipped: 0, Total: 60
 ```
+
+---
+
+## Databasschema
+
+Databasen består av tre tabeller med följande struktur och relationer:
+
+```
+┌─────────────────────────┐        ┌──────────────────────────────┐
+│         Books           │        │           Loans              │
+├─────────────────────────┤        ├──────────────────────────────┤
+│ Id           INT (PK)   │◄───────│ Id           INT (PK)        │
+│ ISBN         TEXT UNIQUE│        │ BookId       INT (FK)        │
+│ Title        TEXT(200)  │        │ MemberId     TEXT (FK)       │
+│ Author       TEXT(100)  │        │ LoanDate     DATETIME        │
+│ PublishedYear INT       │        │ DueDate      DATETIME        │
+│ IsAvailable  BOOL       │        │ ReturnDate   DATETIME (null) │
+└─────────────────────────┘        └──────────────────────────────┘
+                                              │
+┌─────────────────────────┐                  │
+│        Members          │                  │
+├─────────────────────────┤                  │
+│ MemberId     TEXT (PK)  │◄─────────────────┘
+│ Name         TEXT(100)  │
+│ Email        TEXT(100)  │
+│ MemberSince  DATETIME   │
+└─────────────────────────┘
+```
+
+### Relationer
+- **Books → Loans**: En bok kan ha många lån (one-to-many)
+- **Members → Loans**: En medlem kan ha många lån (one-to-many)
+- **DeleteBehavior**: Restrict – böcker och medlemmar kan inte tas bort om aktiva lån finns
+
+### Konfiguration (LibraryContext)
+- `ISBN` är unikt indexerat
+- `MemberId` är primärnyckel i Members (sträng-ID, t.ex. `M001`)
+- `ReturnDate` är nullable – null betyder att boken inte har returnerats än
