@@ -150,3 +150,19 @@ Databasen består av tre tabeller med följande struktur och relationer:
 - `ISBN` är unikt indexerat
 - `MemberId` är primärnyckel i Members (sträng-ID, t.ex. `M001`)
 - `ReturnDate` är nullable – null betyder att boken inte har returnerats än
+
+---
+
+## Screenshots
+
+### Startsida
+![Startsida](docs/screenshots/home.png)
+
+### Böcker
+![Böcker](docs/screenshots/books.png)
+
+### Medlemmar
+![Medlemmar](docs/screenshots/medlems.png)
+
+### Lån
+![Lån](docs/screenshots/loans.png)
