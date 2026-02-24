@@ -6,7 +6,7 @@ namespace LibrarySystem.Core.Models
 {
     public class Member : ISearchable
     {
-        public string MemberId { get; set; }
+        public string MemberId { get; init; }
         public string Name { get; set; }
         public string Email { get; set; }
         public DateTime MemberSince { get; set; }
