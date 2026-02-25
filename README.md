@@ -58,12 +58,20 @@ Sökfunktionalitet implementeras via interfacet `ISearchable` för polymorf sök
 
 ---
 
+## Hämta projektet
+
+```bash
+git clone https://github.com/AigennA/LibrarySystem.git
+cd LibrarySystem
+```
+
+Öppna sedan `LibrarySystem.sln` i Visual Studio om du föredrar det.
+
+---
+
 ## Köra applikationen
 
-### Konsol (Del 1)
-```bash
-dotnet run --project LibrarySystem.Console
-```
+Kör kommandona från rotmappen (`LibrarySystem/`).
 
 ### Webb (Del 2)
 ```bash
@@ -74,15 +82,10 @@ När terminalen visar `Now listening on: http://localhost:5009`, öppna din webb
 http://localhost:5009
 ```
 
----
-
-## Hämta projektet
-
+### Konsol (Del 1)
 ```bash
-git clone https://github.com/AigennA/LibrarySystem.git
+dotnet run --project LibrarySystem.Console
 ```
-
-Öppna sedan `LibrarySystem.sln` i Visual Studio.
 
 ---
 
