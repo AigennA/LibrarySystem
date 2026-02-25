@@ -9,7 +9,15 @@ main {
 }
 
 .sidebar {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+    background-image: linear-gradient(180deg, #1b4332 0%, #081c15 100%);
+}
+
+.mobile-topbar {
+    background-color: #1b4332;
+    height: 3.2rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 .top-row {

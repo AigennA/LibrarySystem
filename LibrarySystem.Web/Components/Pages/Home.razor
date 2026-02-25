@@ -13,34 +13,42 @@
 {
     <div class="row mt-4">
         <div class="col-md-3 mb-3">
-            <div class="card text-white bg-primary">
-                <div class="card-body">
-                    <h5 class="card-title">Böcker</h5>
-                    <p class="card-text display-6">@totalBooks</p>
+            <div class="book-card stat-card-books">
+                <div class="book-left-page">
+                    <h5 class="card-title mb-0">Böcker</h5>
+                </div>
+                <div class="book-right-page">
+                    <p class="display-5">@totalBooks</p>
                 </div>
             </div>
         </div>
         <div class="col-md-3 mb-3">
-            <div class="card text-white bg-success">
-                <div class="card-body">
-                    <h5 class="card-title">Medlemmar</h5>
-                    <p class="card-text display-6">@totalMembers</p>
+            <div class="book-card stat-card-members">
+                <div class="book-left-page">
+                    <h5 class="card-title mb-0">Medlemmar</h5>
+                </div>
+                <div class="book-right-page">
+                    <p class="display-5">@totalMembers</p>
                 </div>
             </div>
         </div>
         <div class="col-md-3 mb-3">
-            <div class="card text-white bg-warning">
-                <div class="card-body">
-                    <h5 class="card-title">Aktiva lån</h5>
-                    <p class="card-text display-6">@activeLoans</p>
+            <div class="book-card stat-card-loans">
+                <div class="book-left-page">
+                    <h5 class="card-title mb-0">Aktiva lån</h5>
+                </div>
+                <div class="book-right-page">
+                    <p class="display-5">@activeLoans</p>
                 </div>
             </div>
         </div>
         <div class="col-md-3 mb-3">
-            <div class="card text-white bg-danger">
-                <div class="card-body">
-                    <h5 class="card-title">Försenade</h5>
-                    <p class="card-text display-6">@overdueLoans</p>
+            <div class="book-card stat-card-overdue">
+                <div class="book-left-page">
+                    <h5 class="card-title mb-0">Försenade</h5>
+                </div>
+                <div class="book-right-page">
+                    <p class="display-5">@overdueLoans</p>
                 </div>
             </div>
         </div>

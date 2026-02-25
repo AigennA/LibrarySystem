@@ -1,6 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Helvetica+Neue&display=swap');
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    color: #c75000;
+}
+
+.book-card {
+    display: flex;
+    border: none !important;
+    border-radius: 3px 8px 8px 3px;
+    min-height: 110px;
+    box-shadow: -4px 5px 14px rgba(0,0,0,0.35), 4px 5px 14px rgba(0,0,0,0.15);
+}
+
+.book-left-page {
+    flex: 1;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 4px solid rgba(0,0,0,0.25);
+    border-radius: 3px 0 0 3px;
+}
+
+.book-right-page {
+    flex: 1;
+    padding: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.08);
+    border-radius: 0 8px 8px 0;
+}
+
+.book-right-page p {
+    margin: 0;
+}
+
+.stat-card-books    { background-color: #1b4332; color: white; }
+.stat-card-members  { background-color: #1565c0; color: white; }
+.stat-card-loans    { background-color: #b5850a; color: white; }
+.stat-card-overdue  { background-color: #842029; color: white; }
 
 a, .btn-link {
     color: #006bb7;

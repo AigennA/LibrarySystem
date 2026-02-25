@@ -69,7 +69,10 @@ dotnet run --project LibrarySystem.Console
 ```bash
 dotnet run --project LibrarySystem.Web
 ```
-Öppna sedan `http://localhost:5009/books` i webbläsaren.
+När terminalen visar `Now listening on: http://localhost:5009`, öppna din webbläsare och gå till:
+```
+http://localhost:5009
+```
 
 ---
 
