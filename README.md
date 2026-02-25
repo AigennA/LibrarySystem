@@ -162,10 +162,10 @@ Databasen består av tre tabeller med följande struktur och relationer:
 ![Startsida](docs/screenshots/home.png)
 
 ### Böcker
-![Böcker](docs/screenshots/books.png)
+![Böcker](docs/screenshots/böcker.png)
 
 ### Medlemmar
-![Medlemmar](docs/screenshots/medlems.png)
+![Medlemmar](docs/screenshots/medlemmar.png)
 
 ### Lån
-![Lån](docs/screenshots/loans.png)
+![Lån](docs/screenshots/lån.png)
